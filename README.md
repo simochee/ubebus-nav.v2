@@ -4,7 +4,9 @@
 
 宇部市営バスをより便利に利用するためのウェブアプリケーション。
 
-## Installation
+> Simply
+
+## Get Started
 
 ```
 $ git clone https://github.com/simochee/ubebus-nav.v2.git

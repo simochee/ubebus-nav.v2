@@ -14,14 +14,15 @@ module.exports = {
             style: 'cssnext',
             parsers: {
                 css: { cssnext }
-            }
+            },
+            ext: 'tag.html'
         }),
         nodeResolve({ jsnext: true }),
         commonjs(),
         buble()
     ],
     format: 'iife',
-    sourceMap: true
+    // sourceMap: true
 }
 
 function cssnext(tagName, css) {

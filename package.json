@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp dev"
+    "dev": "concurrently \"NODE_ENV=development gulp dev\" \"webpack\"",
+    "rollup": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,16 @@
   },
   "homepage": "https://github.com/simochee/ubebus-nav.v2#readme",
   "devDependencies": {
+    "babel-core": "^6.24.1",
     "browser-sync": "^2.18.12",
+    "buble": "^0.15.2",
+    "buble-loader": "^0.4.1",
+    "concurrently": "^3.4.0",
     "eslint-config-es6": "^1.10.3",
     "eslint-config-google": "^0.7.1",
+    "eslint-plugin-html": "^2.0.3",
     "eslint-plugin-riot": "^0.1.6",
+    "eslint-watch": "^3.1.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-nodemon": "^2.2.1",
@@ -31,15 +38,31 @@
     "gulp-rollup": "^2.11.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-stylus": "^2.6.0",
+    "gulp-uglify": "^3.0.0",
     "gulp-watch": "^4.3.11",
+    "gulp-webpack": "^1.5.0",
     "postcss": "^6.0.1",
     "postcss-cssnext": "^2.11.0",
+    "riot-tag-loader": "^1.0.0",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-riot": "^1.1.0",
     "rollup-stream": "^1.19.0",
+    "rollup-watch": "^3.2.2",
+    "uglifyjs-webpack-plugin": "^0.4.3",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "webpack": "^2.6.0"
+  },
+  "dependencies": {
+    "async": "^2.4.1",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "morgan": "^1.8.1",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-rc.1",
+    "riot": "^3.5.1"
   }
 }

@@ -6,10 +6,11 @@ const browserSync = require('browser-sync')
 // const webpack = require('gulp-webpack')
 // for Rollup
 // const rollup = require('gulp-rollup')
-const rollup = require('rollup-stream')
-const source = require('vinyl-source-stream')
-const rename = require('gulp-rename')
-const buffer = require('vinyl-buffer')
+// const rollup = require('rollup-stream')
+// const source = require('vinyl-source-stream')
+// const rename = require('gulp-rename')
+// const uglify = require('gulp-uglify')
+// const buffer = require('vinyl-buffer')
 const watch = require('gulp-watch')
 const sourcemaps = require('gulp-sourcemaps')
 // for Stylus
@@ -22,10 +23,10 @@ gulp.task('browsersync', () => {
     browserSync.init(null, {
         files: ['app.js', 'views/**/*.*', 'public/**/*.*', 'routes/**/*.*', 'models/**/*.*'],
         proxy: 'http://localhost:3000',
-        port: 43001,
-        open: false,
-        notify: true,
-        stream: true
+        port: 43002,
+        open: true,
+        // notify: true,
+        // stream: true
     })
 })
 
@@ -47,7 +48,7 @@ gulp.task('serve', ['browsersync'], () => {
     }).on('readable', function() {
         this.stdout.on('data', (chunk) => {
             if(/^Express\ server\ listening/.test(chunk)) {
-                browserSync.stream()
+                browserSync.reload()
             }
             process.stdout.write(chunk)
         })
@@ -57,26 +58,26 @@ gulp.task('serve', ['browsersync'], () => {
     })
 })
 
-/*
-gulp.task('webpack', () => {
-    gulp.src('')
-        .pipe( require('webpack.config.js') )
-        .pipe(gulp.dest('./public/js'))
-})
-*/
-gulp.task('rollup', () => {
-    return rollup( require('./rollup.config.js') )
-        .pipe(plumber())
-        .pipe(source('entry.js', './src/scripts'))
-        .pipe(buffer())
-        .pipe(sourcemaps.init())
-        .pipe(rename('bundle.js'))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./public/js'))
-})
+// gulp.task('webpack', () => {
+//     gulp.src('')
+//         .pipe(webpack( require('./webpack.config.js') ))
+//         .pipe(gulp.dest('./public/js'))
+// })
+
+// gulp.task('rollup', () => {
+//     return rollup( require('./rollup.config.js') )
+//         .pipe(plumber())
+//         .pipe(source('entry.js', './src/scripts'))
+//         .pipe(buffer())
+//         .pipe(sourcemaps.init())
+//         .pipe(uglify())
+//         .pipe(rename('bundle.min.js'))
+//         .pipe(sourcemaps.write('.'))
+//         .pipe(gulp.dest('./public/js'))
+// })
 
 gulp.task('stylus', () => {
-    gulp.src('./src/stylus/!(_)*.styl')
+    gulp.src('./src/styles/!(_)*.styl')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(stylus())
@@ -85,12 +86,14 @@ gulp.task('stylus', () => {
         .pipe(gulp.dest('./public/css'))
 })
 
-gulp.task('build', ['rollup', 'stylus'], () => {
-    watch(['./src/(stylus|modules)/**/*.styl'], () => {
+gulp.task('build', ['stylus'], () => {
+    watch(['./src/(styles|modules|pages)/**/*.styl'], () => {
         gulp.start('stylus')
+        browserSync.stream()
     })
-    watch(['./src/(scripts|modules)/**/*.(js|tag)'], () => {
-        gulp.start('rollup')
+    watch(['./src/(scripts|modules|pages)/**/*.(js|tag.html)'], () => {
+        // gulp.start('webpack')
+        browserSync.reload()
     })
 })
 

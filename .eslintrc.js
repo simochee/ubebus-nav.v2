@@ -42,5 +42,12 @@ module.exports = {
     },
     "plugins": [
         "riot"
-    ]
+    ],
+    "globals": {
+        "riot": true,
+        "opts": true
+    },
+    "parserOptions": {
+        "sourceType": "module"
+    }
 };
